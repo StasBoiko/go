@@ -1,0 +1,37 @@
+version: '3.3'
+
+services:
+  db:
+    image: postgres:13-alpine
+    networks:
+      test_work:
+    volumes:
+      - test_work_db_data:/var/lib/postgresql/data
+    restart: always
+    environment:
+      POSTGRES_DB: test_work
+      POSTGRES_USER: test_work
+      POSTGRES_PASSWORD: localinsecurepassword
+
+  app:
+    depends_on:
+      - db
+    networks:
+      test_work:
+    build:
+      context: .
+    ports:
+      - 8080:8080
+    restart: always 
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_DBNAME: test_work
+      POSTGRES_USER: test_work
+      POSTGRES_PASSWORD: localinsecurepassword
+      POSTGRES_PORT: "5432"
+
+volumes:
+  test_work_db_data:
+
+networks:
+  test_work:
