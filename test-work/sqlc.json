@@ -1,0 +1,10 @@
+{
+  "version": "1",
+  "packages": [
+    {
+      "path": "postgres",
+      "queries": "./queries.sql",
+      "schema": "./schema.sql"
+    }
+  ]
+}
