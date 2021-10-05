@@ -1,4 +1,10 @@
-version: '3.3'
+version: '3.9'
+
+volumes:
+  test_work_db_data:
+
+networks:
+  test_work:
 
 services:
   db:
@@ -14,6 +20,7 @@ services:
       POSTGRES_PASSWORD: localinsecurepassword
 
   app:
+    container_name: test-work-app
     depends_on:
       - db
     networks:
@@ -22,16 +29,10 @@ services:
       context: .
     ports:
       - 8080:8080
-    restart: always 
+    restart: always
     environment:
       POSTGRES_HOST: db
       POSTGRES_DBNAME: test_work
       POSTGRES_USER: test_work
       POSTGRES_PASSWORD: localinsecurepassword
       POSTGRES_PORT: "5432"
-
-volumes:
-  test_work_db_data:
-
-networks:
-  test_work:
